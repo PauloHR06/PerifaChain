@@ -9,9 +9,9 @@ Plataforma Peer-to-Peer descentralizada que permita a artistas periféricos capt
     <img src= "../assets/smart_contracts_logic.png" width="80%">
 </div>
 
-### `ContractRegistry`:
+### Contrato `ContractRegistry`
 
-Contrato inteligente responsável por registrar, aprovar e gerenciar projetos na plataforma. Ele define regras de criação, aprovação, captação e acompanhamento de status, além de emitir eventos que notificam as ações principais. Seguindo o fluxo:
+&emsp;Contrato inteligente responsável por registrar, aprovar e gerenciar projetos na plataforma. Ele define regras de criação, aprovação, captação e acompanhamento de status, além de emitir eventos que notificam as ações principais. Seguindo o fluxo:
 
 1. Criação do projeto: novo registro `Pending`
 2. Aprovação do projeto: status `Approved`
@@ -63,11 +63,9 @@ Contrato inteligente responsável por registrar, aprovar e gerenciar projetos na
 * `getProjectDetails()` - Consulta de dados.
 * `setFundingGoal()` - Definir meta de captação.
     
-### `LoanEscrow`
+### Contrato `LoanEscrow`
 
-O contrato LoanEscrow atua como um cofre inteligente (escrow) que gerencia a captação, custódia e liberação de recursos financeiros destinados aos projetos artísticos registrados no contrato ProjectRegistry.
-
-Ele funciona como intermediário entre investidores e artistas, garantindo que os fundos sejam movimentados apenas sob condições pré-estabelecidas — protegendo ambas as partes com segurança e automação on-chain.
+&emsp;O contrato LoanEscrow atua como um cofre inteligente (escrow) que gerencia a captação, custódia e liberação de recursos financeiros destinados aos projetos artísticos registrados no contrato ProjectRegistry. Ele funciona como intermediário entre investidores e artistas, garantindo que os fundos sejam movimentados apenas sob condições pré-estabelecidas — protegendo ambas as partes com segurança e automação on-chain.
 
 **Estruturas de dados**:
 
@@ -105,14 +103,46 @@ Ele funciona como intermediário entre investidores e artistas, garantindo que o
 * `refundInvestors()` - Reembolso em caso de falha.
 * `partialRelease()` - Liberação em etapas.
 
-### `RepaymentManager`
+### Contrato `RepaymentManager`
 
+&emsp;O contrato RepaymentManager é responsável por gerenciar a fase de repagamento dos projetos financiados. Ele define cronogramas de pagamento, aceita repagamentos tradicionais ou baseados em royalties, e realiza a distribuição proporcional dos valores aos investidores.
+
+**Estruturas de dados**:
+
+<div align="center">
+<sub>RepaymentSchedule</sub>
+
+| Campo            | Tipo      | Descrição                                    |
+| ---------------- | --------- | -------------------------------------------- |
+| `projectId`      | `uint256` | ID do projeto associado                      |
+| `totalOwed`      | `uint256` | Valor total devido (principal + juros)       |
+| `totalPaid`      | `uint256` | Valor total já pago                          |
+| `nextPaymentDue` | `uint256` | Data do próximo pagamento                    |
+| `monthlyPayment` | `uint256` | Valor da parcela mensal                      |
+| `isRoyaltyBased` | `bool`    | Indica se o pagamento é baseado em royalties |
+| `isCompleted`    | `bool`    | Indica se o repagamento foi concluído        |
+| `createdAt`      | `uint256` | Data de criação do cronograma                |
+
+</div>
+
+<div align="center">
+<sub>RoyaltyPayment</sub>
+
+| Campo        | Tipo      | Descrição                                               |
+| ------------ | --------- | ------------------------------------------------------- |
+| `projectId`  | `uint256` | ID do projeto                                           |
+| `amount`     | `uint256` | Valor recebido em royalties                             |
+| `source`     | `string`  | Origem dos royalties ("spotify", "show", "merch", etc.) |
+| `timestamp`  | `uint256` | Data e hora do pagamento                                |
+| `oracleHash` | `bytes32` | Hash da verificação enviada pelo oráculo                |
+
+</div>
+
+**Métodos**: <br>
 * `scheduleRepayment()` - Agendar pagamentos
 * `processRoyaltyPayment()` - Processar royalties
 * `distributePayments()` - Distribuir pro rata
 * `calculateInterest()` - Calcular juros
-
-**Eventos:**: `RepaymentScheduled`, `RoyaltyPaymentReceived`, `PaymentDistributed`
 
 ### Contrato `ReputationManager`
 
