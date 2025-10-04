@@ -65,12 +65,45 @@ Contrato inteligente responsável por registrar, aprovar e gerenciar projetos na
     
 ### `LoanEscrow`
 
+O contrato LoanEscrow atua como um cofre inteligente (escrow) que gerencia a captação, custódia e liberação de recursos financeiros destinados aos projetos artísticos registrados no contrato ProjectRegistry.
+
+Ele funciona como intermediário entre investidores e artistas, garantindo que os fundos sejam movimentados apenas sob condições pré-estabelecidas — protegendo ambas as partes com segurança e automação on-chain.
+
+**Estruturas de dados**:
+
+<div align="center">
+<sub>Investment</sub>
+
+| Campo       | Tipo      | Descrição                         |
+| ----------- | --------- | --------------------------------- |
+| `investor`  | `address` | Endereço do investidor            |
+| `amount`    | `uint256` | Valor investido (em token ou ETH) |
+| `timestamp` | `uint256` | Data e hora do investimento       |
+
+</div>
+
+<div align="center">
+<sub>EscrowData</sub>
+
+| Campo            | Tipo                          | Descrição                                             |
+| ---------------- | ----------------------------- | ----------------------------------------------------- |
+| `projectId`      | `uint256`                     | ID do projeto no registro principal                   |
+| `totalRaised`    | `uint256`                     | Total arrecadado até o momento                        |
+| `goalAmount`     | `uint256`                     | Meta de captação do projeto                           |
+| `fundsReleased`  | `bool`                        | Indica se os fundos já foram liberados ao artista     |
+| `fundsRefunded`  | `bool`                        | Indica se os fundos foram devolvidos aos investidores |
+| `createdAt`      | `uint256`                     | Timestamp de criação do escrow                        |
+| `investments`    | `mapping(address => uint256)` | Valor investido por endereço                          |
+| `investmentList` | `Investment[]`                | Lista de todos os investimentos realizados            |
+
+</div>
+
+**Métodos**:
+
 * `depositFunds()` - Receber investimentos.
 * `releaseFunds()` - Liberação quando meta atingida.
 * `refundInvestors()` - Reembolso em caso de falha.
 * `partialRelease()` - Liberação em etapas.
-
-**Eventos:** `FundsDeposited`, `FundsReleased`, `RefundInitiated`
 
 ### `RepaymentManager`
 
