@@ -1,4 +1,13 @@
-# <img src="../assets/logo.png" width="20%"> <img src="../assets/qitech-logo.png" width="50%"> 
+<div align="center">
+  <a href="https://qitech.com.br/">
+    <img src="../assets/logo_qitech_perifa.png" 
+         alt="Imagem com a logotipo da QI Tech e do Perifa Chain" 
+         border="0" 
+         style="width: 100%; height: auto; margin-bottom: 10px;">
+  </a>
+</div>
+
+---
 
 Plataforma Peer-to-Peer descentralizada que permita a artistas periféricos captar microcrédito para lançamento de álbuns, videoclipes e turnês.
 
