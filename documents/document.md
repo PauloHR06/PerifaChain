@@ -9,15 +9,60 @@ Plataforma Peer-to-Peer descentralizada que permita a artistas periféricos capt
     <img src= "../assets/smart_contracts_logic.png" width="80%">
 </div>
 
-### `ProjectRegistry`:
+### `ContractRegistry`:
 
+Contrato inteligente responsável por registrar, aprovar e gerenciar projetos na plataforma. Ele define regras de criação, aprovação, captação e acompanhamento de status, além de emitir eventos que notificam as ações principais. Seguindo o fluxo:
+
+1. Criação do projeto: novo registro `Pending`
+2. Aprovação do projeto: status `Approved`
+3. Captação de recursos: status `Funding` / `Funded` 
+4. Execução e repagamento: status `Active` / `Completed`
+5. Encerramento ou cancelamento: status `Cancelled`
+
+**Estruturas de dados**: 
+
+<div align="center">
+<sub>Enum ProjectStatus</sub>
+
+| Nome        | Descrição                                             |
+| ----------- | ----------------------------------------------------- |
+| `PENDING`   | Projeto criado, aguardando aprovação do administrador |
+| `APPROVED`  | Projeto aprovado para iniciar captação                |
+| `FUNDING`   | Projeto em fase de captação de recursos               |
+| `FUNDED`    | Meta de captação atingida                             |
+| `ACTIVE`    | Projeto em execução                                   |
+| `COMPLETED` | Projeto concluído                                     |
+| `CANCELLED` | Projeto cancelado manualmente ou por emergência       |
+
+</div>
+
+<div align="center">
+<sub>Projects</sub>
+
+| Campo                    | Tipo            | Descrição                                     |
+| ------------------------ | --------------- | --------------------------------------------- |
+| `id`                     | `uint256`       | Identificador único do projeto                |
+| `artist`                 | `address`       | Endereço do criador/artista                   |
+| `title`                  | `string`        | Título do projeto                             |
+| `description`            | `string`        | Descrição do projeto                          |
+| `demoUri`                | `string`        | Hash/IPFS com material demonstrativo          |
+| `fundingGoal`            | `uint256`       | Meta de captação em wei                       |
+| `fundingDeadline`        | `uint256`       | Prazo máximo para captação                    |
+| `repaymentDeadline`      | `uint256`       | Prazo para repagamento dos investidores       |
+| `interestRate`           | `uint256`       | Taxa de juros (base 10.000 — ex: 5000 = 50%)  |
+| `status`                 | `ProjectStatus` | Estado atual do projeto                       |
+| `allowsRoyaltyRepayment` | `bool`          | Se o repagamento pode ser feito via royalties |
+| `createdAt`              | `uint256`       | Timestamp de criação                          |
+| `approvedAt`             | `uint256`       | Timestamp de aprovação                        |
+
+</div>
+
+**Métodos**: <br>
 * `createProject()` - Registro de novo projeto.
 * `updateProjectStatus()` - Atualização do status.
 * `getProjectDetails()` - Consulta de dados.
 * `setFundingGoal()` - Definir meta de captação.
     
-**Eventos:** `ProjectCreated`, `ProjectStatusUpdated`, `FundingGoalReached`
-
 ### `LoanEscrow`
 
 * `depositFunds()` - Receber investimentos.
