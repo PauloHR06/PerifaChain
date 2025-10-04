@@ -28,7 +28,7 @@ module.exports = {
     
     // Polygon Mumbai Testnet
     mumbai: {
-      url: process.env.POLYGON_MUMBAI_RPC || "https://rpc-mumbai.maticvigil.com/",
+      url: process.env.POLYGON_MUMBAI_RPC || "https://rpc.ankr.com/polygon_mumbai",
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
       chainId: 80001,
       gasPrice: 35000000000, // 35 gwei
@@ -54,6 +54,14 @@ module.exports = {
       url: "https://arb1.arbitrum.io/rpc",
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
       chainId: 42161,
+    },
+    
+    // Polygon Amoy Testnet
+    amoy: {
+      url: process.env.POLYGON_AMOY_RPC || process.env.POLYGON_MUMBAI_RPC || "https://rpc.ankr.com/polygon_mumbai",
+      accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
+      chainId: process.env.AMOY_CHAIN_ID ? parseInt(process.env.AMOY_CHAIN_ID, 10) : 80002,
+      gasPrice: process.env.AMOY_GAS_PRICE ? parseInt(process.env.AMOY_GAS_PRICE, 10) : 35000000000,
     },
   },
   

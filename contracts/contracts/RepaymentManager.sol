@@ -263,8 +263,12 @@ contract RepaymentManager is ReentrancyGuard, Ownable {
         emit RoyaltyPaymentReceived(_projectId, _amount, _source, msg.sender);
     }
     
-    function _distributePayment(uint256 _projectId, uint256 _totalAmount) internal {
+    function _distributePayment(uint256 _projectId, uint256 /* _totalAmount */) internal view {
+        // obter totalRaised para calcular participações; se for zero, nada a distribuir
         (uint256 totalRaised, , , ,) = loanEscrow.getEscrowData(_projectId);
+        if (totalRaised == 0) {
+            return;
+        }
         
         // Obter lista de investidores - precisaríamos implementar uma função no LoanEscrow para isso
         // Por simplicidade, vou assumir que temos essa informação

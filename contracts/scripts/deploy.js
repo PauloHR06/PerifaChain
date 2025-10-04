@@ -3,9 +3,14 @@ const { ethers, upgrades } = require("hardhat");
 async function main() {
     console.log("Iniciando deploy dos contratos...");
     
-    const [deployer, feeRecipient, oracle1, oracle2] = await ethers.getSigners();
-    console.log("Deployer:", deployer.address);
-    console.log("Fee Recipient:", feeRecipient.address);
+    const signers = await ethers.getSigners();
+    const deployer = signers[0];
+    // Fallbacks: se não houver signers suficientes, usar variáveis de ambiente ou deployer
+    const feeRecipient = signers[1] || { address: process.env.FEE_RECIPIENT_ADDRESS || (deployer && deployer.address) };
+    const oracle1 = signers[2] || { address: process.env.ORACLE1_ADDRESS || (deployer && deployer.address) };
+    const oracle2 = signers[3] || { address: process.env.ORACLE2_ADDRESS || (deployer && deployer.address) };
+    console.log("Deployer:", deployer ? deployer.address : "<none>");
+    console.log("Fee Recipient:", feeRecipient.address ? feeRecipient.address : feeRecipient);
     
     // 1. Deploy do ProjectRegistry
     console.log("\\n Deploying ProjectRegistry...");

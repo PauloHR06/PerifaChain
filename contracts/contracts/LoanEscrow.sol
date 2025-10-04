@@ -325,8 +325,7 @@ contract LoanEscrow is ReentrancyGuard, Ownable {
     }
     
     // Função de emergência
-    function emergencyWithdraw(uint256 _projectId) external onlyOwner {
-        EscrowData storage escrow = escrows[_projectId];
+    function emergencyWithdraw(uint256 /* _projectId */) external onlyOwner {
         if (address(acceptedToken) == address(0)) {
             payable(owner()).transfer(address(this).balance);
         } else {
