@@ -8,7 +8,7 @@ const styles = `
 :root { --neon: #AAFF00; }
 * { box-sizing: border-box; }
 html, body { height: 100%; }
-body { margin: 0; background: #000; font-family: 'NeueMontreal', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+body { margin: 0; background: #e9e9e9; font-family: 'NeueMontreal', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; display: grid; place-items: center; min-height: 100vh; padding: 20px; }
 
 .page { min-height: 100vh; display: grid; place-items: center; }
 .canvas { position: relative; width: 440px; height: 956px; border-radius: 24px; overflow: hidden; background: var(--neon); color: #000; }
