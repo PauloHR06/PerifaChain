@@ -34,9 +34,13 @@ const styles = `
 html, body { height: 100%; }
 body {
   margin: 0;
-  background: var(--bg);
+  background: #e9e9e9;
   color: var(--ink);
   font-family: "NeueMontreal", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: 20px;
 }
 body.preview {
   background: #e9e9e9;
