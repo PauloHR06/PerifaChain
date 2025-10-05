@@ -1,5 +1,16 @@
+# Ignore environment files
+.env
+
+# Hardhat / build
+/contracts/artifacts
+/contracts/cache
+/contracts/deployments
+/contracts/*.log
+
+# Node modules
+/contracts/node_modules
+
 node_modules
 
-.env
 
 
