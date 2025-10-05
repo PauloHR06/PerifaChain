@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Histórico de Transações</title>
+  <link rel="stylesheet" href="./transaction_history.css" />
+</head>
+<body class="preview">
+  <div class="phone-viewport">
+    <header class="topbar">
+      <h1 class="title">Histórico</h1>
+      <nav class="filters" aria-label="Filtros">
+        <button class="pill pill--active" data-filter="all">Tudo</button>
+        <button class="pill" data-filter="credit">Entradas</button>
+        <button class="pill" data-filter="debit">Saídas</button>
+      </nav>
+      <div class="search">
+        <span class="search-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#0a0a0a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="7"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </span>
+        <input id="search" type="search" placeholder="Buscar por título ou descrição" />
+      </div>
+    </header>
+
+    <main class="content">
+      <section class="group">
+        <div class="group-header">Hoje</div>
+        <ul class="list">
+          <li class="row">
+            <div class="left">
+              <span class="dot credit" aria-hidden="true"></span>
+              <div class="title">Rentabilidade recebida</div>
+              <div class="sub">Sarau na Praça</div>
+            </div>
+            <div class="right">
+              <div class="amount credit">+ R$ 38,75</div>
+              <div class="time">09:12</div>
+            </div>
+          </li>
+          <li class="row">
+            <div class="left">
+              <span class="dot debit" aria-hidden="true"></span>
+              <div class="title">Aporte em artista</div>
+              <div class="sub">Sarau na Praça</div>
+            </div>
+            <div class="right">
+              <div class="amount debit">- R$ 500,00</div>
+              <div class="time">08:41</div>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <section class="group">
+        <div class="group-header">Ontem</div>
+        <ul class="list">
+          <li class="row">
+            <div class="left">
+              <span class="dot credit" aria-hidden="true"></span>
+              <div class="title">Retorno parcial</div>
+              <div class="sub">Painéis da Comunidade</div>
+            </div>
+            <div class="right">
+              <div class="amount credit">+ R$ 120,00</div>
+              <div class="time">20:03</div>
+            </div>
+          </li>
+          <li class="row">
+            <div class="left">
+              <span class="dot debit" aria-hidden="true"></span>
+              <div class="title">Aporte em artista</div>
+              <div class="sub">Painéis da Comunidade</div>
+            </div>
+            <div class="right">
+              <div class="amount debit">- R$ 1.000,00</div>
+              <div class="time">12:48</div>
+            </div>
+          </li>
+        </ul>
+      </section>
+
+      <section class="group">
+        <div class="group-header">02/10/2025</div>
+        <ul class="list">
+          <li class="row">
+            <div class="left">
+              <span class="dot debit" aria-hidden="true"></span>
+              <div class="title">Aporte em artista</div>
+              <div class="sub">Sarau na Praça</div>
+            </div>
+            <div class="right">
+              <div class="amount debit">- R$ 200,00</div>
+              <div class="time">10:10</div>
+            </div>
+          </li>
+          <li class="row">
+            <div class="left">
+              <span class="dot credit" aria-hidden="true"></span>
+              <div class="title">Dividendo recebido</div>
+              <div class="sub">Galeria a céu aberto</div>
+            </div>
+            <div class="right">
+              <div class="amount credit">+ R$ 300,00</div>
+              <div class="time">08:15</div>
+            </div>
+          </li>
+        </ul>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Filtro por tipo (pílulas) + busca por texto combinados
+    (function(){
+      const pills = document.querySelectorAll('.pill');
+      const search = document.getElementById('search');
+      let mode = 'all';
+
+      function applyFilters(){
+        const q = (search?.value || '').trim().toLowerCase();
+        document.querySelectorAll('.row').forEach(row => {
+          const amt = row.querySelector('.amount');
+          const isCredit = amt?.classList.contains('credit');
+          const isDebit = amt?.classList.contains('debit');
+          const t = row.querySelector('.title')?.textContent?.toLowerCase() || '';
+          const s = row.querySelector('.sub')?.textContent?.toLowerCase() || '';
+          const matchType = mode === 'all' || (mode === 'credit' && isCredit) || (mode === 'debit' && isDebit);
+          const matchText = !q || t.includes(q) || s.includes(q);
+          row.classList.toggle('hidden', !(matchType && matchText));
+        });
+      }
+
+      pills.forEach(p => p.addEventListener('click', () => {
+        pills.forEach(x => x.classList.remove('pill--active'));
+        p.classList.add('pill--active');
+        mode = p.getAttribute('data-filter') || 'all';
+        applyFilters();
+      }));
+
+      search?.addEventListener('input', applyFilters);
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cadastro</title>
+  <link rel="stylesheet" href="./register.css" />
+</head>
+<body class="preview">
+  <div class="phone-viewport">
+    <main class="content">
+      <header class="hero">
+        <h1 class="title">
+          <span class="line block">A SUA</span>
+          <span class="line script">JORNADA</span>
+          <span class="line block">DE IMPACTO</span>
+          <span class="line block">COMEÇA <span class="underline">AQUI</span></span>
+        </h1>
+      </header>
+
+      <form class="form" id="register-form" novalidate>
+        <label class="field">
+          <span class="icon star" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#0a0a0a" stroke-width="2" stroke-linecap="round">
+              <path d="M12 3v18M3 12h18M5.2 5.2l13.6 13.6M18.8 5.2L5.2 18.8"/>
+            </svg>
+          </span>
+          <input type="text" name="nome" placeholder="Caroline Moraes Paz" required />
+        </label>
+        <label class="field">
+          <span class="icon star" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#0a0a0a" stroke-width="2" stroke-linecap="round">
+              <path d="M12 3v18M3 12h18M5.2 5.2l13.6 13.6M18.8 5.2L5.2 18.8"/>
+            </svg>
+          </span>
+          <input type="email" name="email" placeholder="email@exemplo.com" required />
+        </label>
+        <label class="field">
+          <span class="icon star" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#0a0a0a" stroke-width="2" stroke-linecap="round">
+              <path d="M12 3v18M3 12h18M5.2 5.2l13.6 13.6M18.8 5.2L5.2 18.8"/>
+            </svg>
+          </span>
+          <input type="text" name="usuario" placeholder="seu.usuario" required />
+        </label>
+        <label class="field">
+          <span class="icon lock"><img src="../assets/Vector.png" alt="cadeado" /></span>
+          <input type="password" name="senha" placeholder="*************" required />
+        </label>
+        <label class="field">
+          <span class="icon lock"><img src="../assets/Vector.png" alt="cadeado" /></span>
+          <input type="password" name="confirmar" placeholder="*************" required />
+        </label>
+      </form>
+
+      <button class="cta" type="submit" form="register-form">Continuar</button>
+      <p class="foot">Já tem conta? <a href="#" class="login-link">Faça Login</a></p>
+    </main>
+  </div>
+  <script>
+    (function(){
+      const form = document.getElementById('register-form');
+      form?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const fd = new FormData(form);
+        const senha = String(fd.get('senha')||'');
+        const confirmar = String(fd.get('confirmar')||'');
+        if (senha !== confirmar) {
+          alert('As senhas não coincidem.');
+          return;
+        }
+        alert('Cadastro enviado!');
+      });
+    })();
+  </script>
+</body>
+</html>

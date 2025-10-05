@@ -1,0 +1,51 @@
+@font-face{font-family:"NeueMontreal";src:url("../assets/fonts/NeueMontreal-Medium.otf") format("opentype");font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:"NetworkFree";src:url("../assets/fonts/NetworkFreeVersion.ttf") format("truetype");font-weight:700;font-style:normal;font-display:swap}
+:root{--bg:#ffffff;--ink:#0a0a0a;--muted:#666;--green:#AAFF00}
+*{box-sizing:border-box}html,body{height:100%}
+body.preview{background:#e9e9e9;display:grid;place-items:center;padding:20px}
+.phone-viewport{width:440px;height:956px;background:var(--bg);color:var(--ink);border-radius:28px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.15),0 2px 10px rgba(0,0,0,.08);position:relative;display:flex;flex-direction:column}
+
+/* Topbar */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 24px}
+.icon-button{all:unset;cursor:pointer;width:36px;height:36px;display:grid;place-items:center;border-radius:8px}
+.menu-icon{width:26px;height:3px;background:var(--ink);position:relative;display:inline-block}
+.menu-icon::before,.menu-icon::after{content:"";position:absolute;left:0;right:0;height:3px;background:var(--ink)}
+.menu-icon::before{top:-7px}.menu-icon::after{top:7px}
+.toplink{text-decoration-line:underline;text-decoration-thickness:2px;text-underline-offset:3px;color:var(--ink);font-size:14px;letter-spacing:.5px;font-weight:800}
+
+.content{padding:6px 16px 24px;display:flex;flex-direction:column;gap:14px}
+.section-title{font-family:"NeueMontreal";font-size:16px;margin:10px 0 6px}
+
+/* KPI/Stats */
+.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.kard{border:2px solid var(--green);border-radius:14px;padding:10px;background:#fff}
+.kard .v{font-weight:800;font-size:18px}
+.kard .l{font-size:12px;color:#333}
+
+/* Quick actions */
+.quick{display:flex;flex-wrap:wrap;gap:8px}
+.btn{border:2px solid var(--ink);background:var(--ink);color:#fff;border-radius:10px;padding:10px 12px;font-weight:700;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border-color:#0003}
+
+/* Lists */
+.card{border:2px solid var(--green);border-radius:14px;padding:12px;background:#fff}
+.card .meta{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.badge{font-weight:800;border:1.5px solid #0003;border-radius:999px;padding:4px 8px}
+.bar{height:8px;border-radius:999px;background:#eee;margin-top:8px;overflow:hidden}
+.fill{height:100%;background:var(--green)}
+.card .foot{display:flex;justify-content:space-between;margin-top:8px;color:#333;font-size:12px}
+
+/* Wallet & holdings */
+.row{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px dashed #eee}
+.row .title{font-weight:600}
+.row .value{font-weight:700}
+.chg.pos{color:#0c8f00}.chg.neg{color:#cc0022}
+
+/* Activity */
+.activity-item{display:flex;align-items:flex-start;justify-content:space-between;padding:10px 0;border-bottom:1px dashed #eee}
+.activity-item .time{color:var(--muted);font-size:12px}
+
+/* Header titles */
+.hello{font-family:"NeueMontreal";font-weight:600;font-size:18px}
+.pill{border-radius:999px;padding:8px 12px;font-weight:700}
+.pill.ghost{border:1.5px solid #0003;background:transparent}
