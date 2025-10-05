@@ -1,0 +1,95 @@
+:root {
+  --neon: #AAFF00;
+}
+
+* { box-sizing: border-box; }
+html, body {
+  height: 100%;
+  margin: 0;
+  background: #000;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+}
+
+.page {
+  min-height: 100%;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.canvas {
+  width: 440px;
+  height: 956px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+  background: #111;
+}
+
+.bg {
+  position: absolute;
+  inset: 0;
+  background-image: url('../assets/Imagem fundo (1).png');
+  background-size: cover;
+  background-position: center;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+}
+
+.center-area {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.logo {
+  width: 150%;
+  height: auto;
+  object-fit: contain;
+}
+
+.roles {
+  position: absolute;
+  top: 62%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  display: flex;
+  gap: 16px;
+}
+
+.role {
+  background: var(--neon);
+  color: #0A0A0A;
+  border: 0;
+  padding: 12px 24px;
+  border-radius: 24px;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.caption {
+  position: absolute;
+  left: 24px;
+  right: 24px;
+  bottom: 24px;
+  color: #EDEDED;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 26.49px;
+  line-height: 26.49px;
+  text-align: center;
+  font-family: 'Neue Montreal', Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+.highlight {
+  color: #FFFFFF;
+  text-decoration: underline;
+}
