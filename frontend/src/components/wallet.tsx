@@ -137,7 +137,7 @@ const Wallet: React.FC = () => {
         <section className="chips">
           <button className="chip chip--primary">PIX</button>
           <button className="chip">Pagar</button>
-          <button className="chip">Extrato</button>
+          <button className="chip" onClick={() => window.location.href = "/transactions"}>Extrato</button>
         </section>
         <a className="all-options" href="#">
           TODAS AS OPÇÕES DA SUA CONTA

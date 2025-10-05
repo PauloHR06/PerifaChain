@@ -3,215 +3,126 @@ import React, { useState, useEffect } from "react";
 const styles = `
 @font-face{font-family:"NeueMontreal";src:url("../../fonts/NeueMontreal-Medium.otf") format("opentype");font-weight:500;font-style:normal;font-display:swap}
 @font-face{font-family:"NetworkFree";src:url("../../fonts/NetworkFreeVersion.ttf") format("truetype");font-weight:700;font-style:normal;font-display:swap}
-:root{--ink:#0a0a0a;--green:#AAFF00;--bg:#111}
+:root{--bg:#ffffff;--ink:#0a0a0a;--muted:#6b6b6b;--green:#AAFF00}
 *{box-sizing:border-box}html,body{height:100%}
 body.preview{background:#e9e9e9;display:grid;place-items:center;padding:20px}
-.phone-viewport{width:440px;height:956px;background:var(--green);color:var(--ink);border-radius:28px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.15),0 2px 10px rgba(0,0,0,.08);position:relative;display:flex;flex-direction:column}
-.content{padding:28px 24px 28px;display:flex;flex-direction:column;gap:16px}
-.title{margin:0; text-align:center; position:absolute; left:42px; top:59px; width:354px; height:223px}
-.title .line{display:block}
-.title .block{font-family:"NeueMontreal"; font-weight:800; font-size:36px; line-height:1; margin:4px 0; letter-spacing:-0.04em}
-.title .script{font-family:"NetworkFree"; font-size:72px; line-height:.86; margin:0 0 -2px 0}
-.title .underline{ text-decoration-line: underline; text-decoration-thickness: 4px; text-underline-offset: 4px }
-.form{position:absolute; left:42px; top:310px; width:354px; display:flex; flex-direction:column; gap:14px}
-.field{position:relative}
-.icon{position:absolute;left:18px;top:50%;transform:translateY(-50%);font-weight:800}
-.icon img{width:16px;height:16px;display:block}
-.icon.lock{font-size:14px}
-.field input{width:100%;border:2px solid #0a0a0a;border-radius:999px;background:#fff;padding:14px 18px 14px 44px;font-family:"NeueMontreal";font-size:16px}
-.field input::placeholder{color:#9aa19d}
-.cta{position:relative; left:50%; transform:translateX(-50%); bottom:84px; display:inline-block;border:none;background:#0a0a0a;color:#fff;font-weight:800;font-size:18px;padding:14px 28px;border-radius:999px;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.25); margin-top: 90px;}
-.foot{position:absolute; left:50%; transform:translateX(-50%); bottom:40px; color:#0a0a0a; text-align:center}
-.login-link{color:#0a0a0a;font-weight:800;text-decoration:underline}
+.phone-viewport{width:440px;height:956px;background:var(--bg);color:var(--ink);border-radius:28px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.15),0 2px 10px rgba(0,0,0,.08);position:relative;display:flex;flex-direction:column}
+
+/* Top bar */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;border-bottom:1px solid #eee}
+.back-button{all:unset;cursor:pointer;font-size:24px;font-weight:700;color:var(--ink)}
+.page-title{font-family:"NeueMontreal";font-weight:700;font-size:18px;letter-spacing:.2px;margin:0}
+
+.content{padding:24px 28px;display:flex;flex-direction:column;gap:16px;overflow-y:auto;flex:1}
+
+/* Transaction item */
+.transaction{display:flex;align-items:center;justify-content:space-between;padding:16px;background:#f9f9f9;border-radius:16px;gap:12px}
+.transaction-info{flex:1}
+.transaction-title{font-family:"NeueMontreal";font-weight:700;font-size:16px;margin:0 0 4px 0}
+.transaction-date{color:var(--muted);font-size:13px;margin:0}
+.transaction-amount{font-weight:800;font-size:18px;letter-spacing:.2px}
+.transaction-amount.positive{color:#00AA00}
+.transaction-amount.negative{color:#CC0000}
+
+.empty-state{text-align:center;padding:60px 20px;color:var(--muted)}
+.empty-state h3{font-family:"NeueMontreal";font-weight:700;font-size:20px;margin:0 0 12px 0;color:var(--ink)}
 `;
 
-type RegisterData = {
-  nome: string;
-  email: string;
-  role: string;
-  senha: string;
-  confirmar: string;
+type Transaction = {
+  id: string;
+  title: string;
+  date: string;
+  amount: number;
+  type: "credit" | "debit";
 };
 
-const Register: React.FC = () => {
-  const [form, setForm] = useState<RegisterData>({
-    nome: "",
-    email: "",
-    role: "",
-    senha: "",
-    confirmar: "",
-  });
-
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
+const Transactions: React.FC = () => {
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!document.getElementById("register-inline-css")) {
+    if (!document.getElementById("transactions-inline-css")) {
       const style = document.createElement("style");
-      style.id = "register-inline-css";
+      style.id = "transactions-inline-css";
       style.innerHTML = styles;
       document.head.appendChild(style);
     }
   }, []);
 
-  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setForm((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-    setError(null);
-    setSuccess(null);
-  }
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    if (form.senha !== form.confirmar) {
-      setError("As senhas não coincidem.");
-      return;
-    }
-    setLoading(true);
-    setError(null);
-    setSuccess(null);
-    try {
-      const response = await fetch("http://localhost:3000/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: form.nome,
-          email: form.email,
-          role: form.role,
-          password: form.senha,
-        }),
-      });
-      if (!response.ok) {
-        const data = await response.json();
-        setError(data.error || "Erro ao cadastrar.");
-        setLoading(false);
-        return;
-      } else {
-        setSuccess("Cadastro realizado com sucesso!");
-        if (form.role.toLowerCase() === "investor") {
-          window.location.href = "/investor-dashboard";
-        } else if (form.role.toLowerCase() === "artist") {
-          window.location.href = "/artist-dashboard";
-        } else {
-          window.location.href = "/";
+  useEffect(() => {
+    // Simula carregamento de transações
+    // Você pode substituir isso por uma chamada real à API
+    setTimeout(() => {
+      setTransactions([
+        {
+          id: "1",
+          title: "Investimento em Artista",
+          date: "05/10/2025",
+          amount: -500.00,
+          type: "debit"
+        },
+        {
+          id: "2",
+          title: "Retorno de Investimento",
+          date: "03/10/2025",
+          amount: 150.00,
+          type: "credit"
+        },
+        {
+          id: "3",
+          title: "Transferência Recebida",
+          date: "01/10/2025",
+          amount: 1000.00,
+          type: "credit"
         }
-      }
-      setForm({
-        nome: "",
-        email: "",
-        role: "",
-        senha: "",
-        confirmar: "",
-      });
-    } catch {
-      setError("Erro de conexão com o servidor.");
-    }
-    setLoading(false);
-  }
+      ]);
+      setLoading(false);
+    }, 500);
+  }, []);
+
+  const formatAmount = (amount: number, type: "credit" | "debit") => {
+    const formatted = amount.toLocaleString("pt-BR", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+    return type === "credit" ? `+ R$ ${formatted}` : `- R$ ${formatted}`;
+  };
 
   return (
     <div className="phone-viewport">
+      <header className="topbar">
+        <button className="back-button" onClick={() => window.location.href = "/wallet"} aria-label="Voltar">
+          ←
+        </button>
+        <h1 className="page-title">Extrato</h1>
+        <div style={{ width: "24px" }}></div>
+      </header>
       <main className="content">
-        <header className="hero">
-          <h1 className="title">
-            <span className="line block">A SUA</span>
-            <span className="line script">JORNADA</span>
-            <span className="line block">DE IMPACTO</span>
-            <span className="line block">
-              COMEÇA <span className="underline">AQUI</span>
-            </span>
-          </h1>
-        </header>
-        <form className="form" id="register-form" onSubmit={handleSubmit} noValidate>
-          <label className="field">
-            <span className="icon star" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width={16} height={16} fill="none"
-                stroke="#0a0a0a" strokeWidth={2} strokeLinecap="round">
-                <path d="M12 3v18M3 12h18M5.2 5.2l13.6 13.6M18.8 5.2L5.2 18.8" />
-              </svg>
-            </span>
-            <input
-              type="text"
-              name="nome"
-              placeholder="Caroline Moraes Paz"
-              required
-              value={form.nome}
-              onChange={handleChange}
-            />
-          </label>
-          <label className="field">
-            <span className="icon star" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width={16} height={16} fill="none"
-                stroke="#0a0a0a" strokeWidth={2} strokeLinecap="round">
-                <path d="M12 3v18M3 12h18M5.2 5.2l13.6 13.6M18.8 5.2L5.2 18.8" />
-              </svg>
-            </span>
-            <input
-              type="email"
-              name="email"
-              placeholder="email@exemplo.com"
-              required
-              value={form.email}
-              onChange={handleChange}
-            />
-          </label>
-          <label className="field">
-            <span className="icon star" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width={16} height={16} fill="none"
-                stroke="#0a0a0a" strokeWidth={2} strokeLinecap="round">
-                <path d="M12 3v18M3 12h18M5.2 5.2l13.6 13.6M18.8 5.2L5.2 18.8" />
-              </svg>
-            </span>
-            <input
-              type="text"
-              name="role"
-              placeholder="investor ou artist"
-              required
-              value={form.role}
-              onChange={handleChange}
-            />
-          </label>
-          <label className="field">
-            <span className="icon lock">
-              <img src="../../public/assets/cadeado.png" alt="cadeado" />
-            </span>
-            <input
-              type="password"
-              name="senha"
-              placeholder="*************"
-              required
-              value={form.senha}
-              onChange={handleChange}
-            />
-          </label>
-          <label className="field">
-            <span className="icon lock">
-              <img src="../../public/assets/cadeado.png" alt="cadeado" />
-            </span>
-            <input
-              type="password"
-              name="confirmar"
-              placeholder="*************"
-              required
-              value={form.confirmar}
-              onChange={handleChange}
-            />
-          </label>
-          {error && <div style={{ color: "red", marginBottom: 8 }}>{error}</div>}
-          {success && <div style={{ color: "green", marginBottom: 8 }}>{success}</div>}
-          <button className="cta" type="submit" disabled={loading}>
-            {loading ? "Enviando..." : "Continuar"}
-          </button>
-        </form>
-        <p className="foot">
-          Já tem conta? <a href="#" className="login-link">Faça Login</a>
-        </p>
+        {loading ? (
+          <div className="empty-state">
+            <h3>Carregando...</h3>
+          </div>
+        ) : transactions.length === 0 ? (
+          <div className="empty-state">
+            <h3>Nenhuma transação</h3>
+            <p>Você ainda não possui transações registradas.</p>
+          </div>
+        ) : (
+          transactions.map((transaction) => (
+            <div key={transaction.id} className="transaction">
+              <div className="transaction-info">
+                <h3 className="transaction-title">{transaction.title}</h3>
+                <p className="transaction-date">{transaction.date}</p>
+              </div>
+              <div className={`transaction-amount ${transaction.type === "credit" ? "positive" : "negative"}`}>
+                {formatAmount(transaction.amount, transaction.type)}
+              </div>
+            </div>
+          ))
+        )}
       </main>
     </div>
   );
 };
 
-export default Register;
+export default Transactions;

@@ -19,7 +19,7 @@ body.preview{background:#e9e9e9;display:grid;place-items:center;padding:20px}
 .title .underline{ text-decoration-line: underline; text-decoration-thickness: 4px; text-underline-offset: 4px }
 
 /* Form positioned under hero (centered with same width) */
-.form{position:absolute; left:42px; top:310px; width:354px; display:flex; flex-direction:column; gap:14px}
+.form{position:absolute !important; left:42px; top:450px !important; width:354px; display:flex; flex-direction:column; gap:14px}
 .field{position:relative}
 .icon{position:absolute;left:18px;top:50%;transform:translateY(-50%);font-weight:800}
 .icon img{width:16px;height:16px;display:block}
@@ -127,12 +127,11 @@ const Register: React.FC = () => {
       <main className="content">
         <header className="hero">
           <h1 className="title">
-            <span className="line block">A SUA</span>
-            <span className="line script">JORNADA</span>
-            <span className="line block">DE IMPACTO</span>
-            <span className="line block">
-              COMEÇA <span className="underline">AQUI</span>
-            </span>
+            <img 
+              src="/assets/logojornada.png" 
+              alt="A sua jornada de impacto começa aqui" 
+              style={{ width: '100%', maxWidth: '350px', height: 'auto', display: 'block', margin: '0 auto' }}
+            />
           </h1>
         </header>
         <form className="form" id="register-form" onSubmit={handleSubmit} noValidate>
@@ -186,7 +185,7 @@ const Register: React.FC = () => {
           </label>
           <label className="field">
             <span className="icon lock">
-              <img src="../../public/assets/cadeado.png" alt="cadeado" />
+              <img src="/assets/cadeado.png" alt="cadeado" />
             </span>
             <input
               type="password"
@@ -199,7 +198,7 @@ const Register: React.FC = () => {
           </label>
           <label className="field">
             <span className="icon lock">
-              <img src="../../public/assets/cadeado.png" alt="cadeado" />
+              <img src="/assets/cadeado.png" alt="cadeado" />
             </span>
             <input
               type="password"

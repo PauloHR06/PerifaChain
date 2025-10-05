@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const styles = `
-@font-face { font-family: 'NeueMontreal'; src: url('../../fonts/NeueMontreal-Medium.otf') format('opentype'); font-weight: 500; font-style: normal; font-display: swap; }
-@font-face { font-family: 'Network Free'; src: url('../../fonts/NetworkFreeVersion.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'NeueMontreal'; src: url('../fonts/NeueMontreal-Medium.otf') format('opentype'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'NetworkFree'; src: url('../fonts/NetworkFreeVersion.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
 
 :root { --neon: #AAFF00; }
 * { box-sizing: border-box; }
@@ -17,7 +18,7 @@ body { margin: 0; background: #000; font-family: 'NeueMontreal', system-ui, -app
 .hero .line { font-family: 'NeueMontreal', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; font-weight: 500; font-size: 51.55px; line-height: 55.07px; letter-spacing: -0.04em; text-transform: uppercase; }
 .hero .line.mix { display: flex; justify-content: center; gap: 10px; align-items: baseline; }
 .hero .neue { font-family: 'NeueMontreal'; font-weight: 500; font-size: 51.55px; line-height: 55.07px; letter-spacing: -0.04em; text-transform: uppercase; }
-.hero .network { font-family: 'Network Free'; font-size: 56px; line-height: 0.9; }
+.hero .network { font-family: 'NetworkFree', Impact, sans-serif; font-size: 56px; line-height: 0.9; text-transform: uppercase; }
 .hero .underline { font-weight: 500; }
 .hero .underline .underline-mark { border-bottom: 3px solid #000; }
 
@@ -52,6 +53,7 @@ body { margin: 0; background: #000; font-family: 'NeueMontreal', system-ui, -app
 `;
 
 const Login: React.FC = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -85,17 +87,8 @@ const Login: React.FC = () => {
       const data = await response.json();
       localStorage.setItem("token", data.token);
 
-      const profileRes = await fetch("http://localhost:3000/api/me", {
-        headers: { Authorization: `Bearer ${data.token}` },
-      });
-      const profile = await profileRes.json();
-      if (profile.role === "investor") {
-        window.location.href = "/investor-dashboard";
-      } else if (profile.role === "artist") {
-        window.location.href = "/artist-dashboard";
-      } else {
-        window.location.href = "/";
-      }
+      // Redireciona para a lista de artistas após login bem-sucedido
+      navigate("/artists");
     } catch (err) {
       alert("Erro na conexão. Tente novamente mais tarde.");
       console.error(err);
@@ -109,15 +102,11 @@ const Login: React.FC = () => {
       <div className="canvas">
         <div className="content">
           <header className="hero">
-            <div className="line">A SUA</div>
-            <div className="line mix">
-              <span className="neue">DE</span>
-              <span className="network">JORNADA</span>
-            </div>
-            <div className="line">DE IMPACTO</div>
-            <div className="line underline">
-              COMEÇA <span className="underline-mark">AQUI</span>
-            </div>
+            <img 
+              src="/assets/logojornada.png" 
+              alt="A sua jornada de impacto começa aqui" 
+              style={{ width: '100%', maxWidth: '350px', height: 'auto', display: 'block', margin: '0 auto' }}
+            />
           </header>
 
           <form className="form" onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>

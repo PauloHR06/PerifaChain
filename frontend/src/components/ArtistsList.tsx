@@ -77,13 +77,12 @@ body.preview {
 .menu-icon::before { top: -7px; }
 .menu-icon::after { top: 7px; }
 .toplink { 
-  text-decoration-line: underline; 
-  text-decoration-thickness: 2px; 
-  text-underline-offset: 3px; 
+  text-decoration: none;
   color: var(--ink); 
-  font-size: 14px; 
+  font-size: 12px; 
   letter-spacing: .5px; 
   font-weight: 800; 
+  text-transform: uppercase;
 }
 .content { padding: 0 16px 24px; max-width: 480px; margin: 0 auto; color: #0a0a0a;}
 .preview .content { max-width: 440px; width: 100%; }
