@@ -1,0 +1,77 @@
+@font-face {
+  font-family: 'Network Free Version';
+  src: url('./NetworkFreeVersion.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Neue Montreal';
+  src: url('./NeueMontreal.otf') format('opentype');
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('./Inter.ttf') format('truetype');
+}
+
+.home-bg {
+  position: relative;
+  min-height: 100vh;
+  background: #000;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.background-img {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  object-fit: cover;
+  filter: grayscale(1) brightness(0.65);
+  z-index: -1;
+}
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-img {
+  display: block;
+  margin: 50px auto 25px auto;
+  width: 210px;
+  height: auto;
+}
+
+.login-btn {
+  font-family: 'Neue Montreal', Arial, sans-serif;
+  background: #AAFF00;
+  color: #000;
+  font-size: 1.1em;
+  border: none;
+  border-radius: 22px;
+  font-weight: 700;
+  padding: 12px 34px;
+  cursor: pointer;
+  margin: 38px 0 26px 0;
+  box-shadow: 0 1px 15px #222;
+  transition: background .2s;
+}
+.login-btn:hover {
+  background: #A3A3A3;
+}
+
+.footer-text {
+  font-family: 'Inter', Arial, sans-serif;
+  color: #fff;
+  font-size: 1em;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 58px;
+}
+
+.dif {
+  color: #AAFF00;
+  text-decoration: underline;
+  font-weight: 900;
+}
