@@ -258,7 +258,7 @@ const ArtistsList: React.FC = () => {
   return (
     <div className="phone-viewport">
       <header className="topbar">
-        <button className="icon-button" aria-label="Menu">
+        <button className="icon-button" aria-label="Menu" onClick={() => window.location.href = "/wallet"}>
           <span className="menu-icon" />
         </button>
         <a className="toplink" href="#">

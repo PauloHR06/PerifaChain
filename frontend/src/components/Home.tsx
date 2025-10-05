@@ -6,7 +6,7 @@ const styles = `
 }
 * { box-sizing: border-box; }
 html, body { height: 100%; }
-body { margin: 0; background: #000; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+body { margin: 0; background: #e9e9e9; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; display: grid; place-items: center; min-height: 100vh; padding: 20px; }
 /* Vector font */
 @font-face {
   font-family: 'Vector';

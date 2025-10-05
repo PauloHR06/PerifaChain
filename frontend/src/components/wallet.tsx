@@ -6,6 +6,7 @@ const styles = `
 @font-face{font-family:"NetworkFree";src:url("../../fonts/NetworkFreeVersion.ttf") format("truetype");font-weight:700;font-style:normal;font-display:swap}
 :root{--bg:#ffffff;--ink:#0a0a0a;--muted:#6b6b6b;--green:#AAFF00}
 *{box-sizing:border-box}html,body{height:100%}
+body{margin:0;background:#e9e9e9;display:grid;place-items:center;min-height:100vh;padding:20px}
 body.preview{background:#e9e9e9;display:grid;place-items:center;padding:20px}
 .phone-viewport{width:440px;height:956px;background:var(--bg);color:var(--ink);border-radius:28px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.15),0 2px 10px rgba(0,0,0,.08);position:relative;display:flex;flex-direction:column}
 
@@ -68,7 +69,7 @@ const RPC_URL = "https://rpc.ankr.com/eth";
 
 const Wallet: React.FC = () => {
   const [user, setUser] = useState<UserWallet | null>(null);
-  const [saldo, setSaldo] = useState<string>("Carregando...");
+  const [saldo, setSaldo] = useState<string>("R$ 50.000,00");
 
   useEffect(() => {
     if (!document.getElementById("wallet-inline-css")) {
@@ -85,23 +86,11 @@ const Wallet: React.FC = () => {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then((res) => res.json())
-      .then((data) => setUser(data));
-  }, []);
-
-  useEffect(() => {
-    if (user?.wallet_address) {
-      const provider = new ethers.JsonRpcProvider(RPC_URL);
-      provider.getBalance(user.wallet_address).then((balance) => {
-        setSaldo(
-          "R$ " +
-            Number(ethers.formatEther(balance)).toLocaleString("pt-BR", {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })
-        );
+      .then((data) => setUser(data))
+      .catch(() => {
+        // Se falhar, mantém o saldo mockado
       });
-    }
-  }, [user]);
+  }, []);
 
   return (
     <div className="phone-viewport">
