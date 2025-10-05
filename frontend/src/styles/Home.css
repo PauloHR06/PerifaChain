@@ -10,7 +10,7 @@ body { margin: 0; background: #000; font-family: Inter, system-ui, -apple-system
 /* Load custom Vector font (provide the file at assets/fonts/Vector/Vector.ttf) */
 @font-face {
   font-family: 'Vector';
-  src: url('../../assets/fonts/NetworkFreeVersion.ttf');
+  src: url('../../public/assets/fonts/NetworkFreeVersion.ttf');
   font-weight: 400 900;
   font-style: normal;
   font-display: swap;
@@ -19,7 +19,7 @@ body { margin: 0; background: #000; font-family: Inter, system-ui, -apple-system
 /* Neue Montreal Medium (using existing OTF at assets/fonts/NeueMontreal-Medium.otf) */
 @font-face {
   font-family: 'Neue Montreal';
-  src: url('../../assets/fonts/NeueMontreal-Medium.otf') format('opentype');
+  src: url('../../public/assets/fonts/NeueMontreal-Medium.otf') format('opentype');
   font-weight: 500;
   font-style: normal;
   font-display: swap;

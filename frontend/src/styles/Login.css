@@ -2,8 +2,8 @@
 :root { --neon: #AAFF00; }
 
 /* Fonts */
-@font-face { font-family: 'Neue Montreal'; src: url('../../assets/fonts/NeueMontreal-Medium.otf') format('opentype'); font-weight: 500; font-style: normal; font-display: swap; }
-@font-face { font-family: 'Network Free'; src: url('../../assets/fonts/NetworkFreeVersion.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Neue Montreal'; src: url('../../public/assets/fonts/NeueMontreal-Medium.otf') format('opentype'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Network Free'; src: url('../../public/assets/fonts/NetworkFreeVersion.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
 
 * { box-sizing: border-box; }
 html, body { height: 100%; }
