@@ -193,20 +193,27 @@ const ArtistsList: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) return;
-    fetch("http://localhost:3000/artists", {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-      .then(res => res.json())
-      .then(data => {
-        const arr = Array.isArray(data.artists) ? data.artists : [];
-        setArtists(arr.map((artist: Artist, i: number) => ({
-          ...artist,
-          bgColor: i === 1 ? "#111" : i === 2 ? "#f6f6f6" : "#AAFF00"
-        })));
-      })
-      .catch(() => setArtists([]));
+    // Dados mockados de 3 artistas
+    setArtists([
+      {
+        id: "1",
+        name: "LÍVIA RAMOS",
+        bio: "Muralista que transforma muros da comunidade em painéis de histórias locais.",
+        bgColor: "#AAFF00"
+      },
+      {
+        id: "2",
+        name: "BRUNO SILVA",
+        bio: "MC e produtor musical que dá voz às vivências da periferia através do rap.",
+        bgColor: "#111"
+      },
+      {
+        id: "3",
+        name: "YASMIN COSTA",
+        bio: "Fotógrafa documental que registra o cotidiano e a cultura das quebradas.",
+        bgColor: "#f6f6f6"
+      }
+    ]);
   }, []);
 
   useEffect(() => {
