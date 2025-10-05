@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pedido de Empréstimo</title>
+  <link rel="stylesheet" href="./loan.css" />
+</head>
+<body class="preview">
+  <div class="phone-viewport">
+    <header class="topbar">
+      <button class="icon-button" aria-label="Menu">
+        <span class="menu-icon"></span>
+      </button>
+      <a class="toplink" href="./artists.html">SOBRE O PERIFACHAIN</a>
+    </header>
+
+    <main class="content">
+      <section class="headline">
+        <h1 class="h-title">
+          <span class="line line-1">AQUI,</span>
+          <span class="line line-2 accent">SONHAR</span>
+          <span class="line line-3">É SÓ O COMEÇO <span class="arrow">→</span></span>
+        </h1>
+      </section>
+
+      <form class="form" id="loan-form" novalidate>
+        <label class="field">
+          <input type="text" name="nome" placeholder="Seu nome completo" required />
+        </label>
+        <label class="field">
+          <input type="number" name="idade" placeholder="Idade" min="10" max="120" required />
+        </label>
+        <label class="field">
+          <input type="text" name="cep" placeholder="CEP / Local / Comunidade" required />
+        </label>
+        <label class="field">
+          <input type="text" name="projeto" placeholder="O nome do seu Projeto" required />
+        </label>
+        <label class="field text">
+          <textarea name="descricao" placeholder="Conte mais sobre o seu projeto.
+Qual a visão que move sua ideia?
+De onde vem a força do seu projeto?
+Seja livre para expressar sua ideia." rows="6" required></textarea>
+        </label>
+
+        <button type="submit" class="cta">Continuar</button>
+      </form>
+    </main>
+  </div>
+
+  <script src="./loan.js"></script>
+</body>
+</html>
