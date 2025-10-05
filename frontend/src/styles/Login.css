@@ -2,8 +2,8 @@
 :root { --neon: #AAFF00; }
 
 /* Fonts */
-@font-face { font-family: 'Neue Montreal'; src: url('../assets/fonts/NeueMontreal-Medium.otf') format('opentype'); font-weight: 500; font-style: normal; font-display: swap; }
-@font-face { font-family: 'Network Free'; src: url('../assets/fonts/NetworkFreeVersion.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Neue Montreal'; src: url('../../assets/fonts/NeueMontreal-Medium.otf') format('opentype'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Network Free'; src: url('../../assets/fonts/NetworkFreeVersion.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
 
 * { box-sizing: border-box; }
 html, body { height: 100%; }
@@ -31,8 +31,24 @@ body { margin: 0; background: #000; font-family: 'Neue Montreal', system-ui, -ap
 .input input { border: 0; outline: 0; font-size: 16px; font-family: 'Neue Montreal'; color: #111; height: 100%; background: transparent; border-radius: inherit; -webkit-appearance: none; appearance: none; }
 .input input::placeholder { color: #9AA0A6; }
 
-.btn { position: absolute; top: 608.89px; left: 134.45px; width: 171.1px; height: 54.08px; display: grid; place-items: center; border: 0; background: #000; color: #fff; padding: 0 16px; border-radius: 59px; font-size: 18px; font-weight: 700; cursor: pointer; }
-.btn:hover { filter: brightness(1.05); }
+.btn {
+  width: 171.1px;
+  height: 54.08px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  background: #000;
+  color: #fff;
+  padding: 0 16px;
+  border-radius: 59px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+
+  /* remova top e left */
+  position: relative; /* ou remova a propriedade position totalmente */
+  margin: 24px auto 0; /* centraliza e dá margem superior */
+}
 
 .foot { position: absolute; top: 810.62px; left: 50%; transform: translateX(-50%); width: 256px; height: 20px; text-align: center; }
 .foot .muted { margin: 0; color: #0A0A0A; font-size: 16px; font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; font-weight: 600; }
